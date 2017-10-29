@@ -3,25 +3,26 @@
 int game[81] = {0};
 
 void printgame (int *game){
-  printf("game state is:\n");
-  for (int i=1;i <=81; i++){
-    printf("%d ", game[i]);
+  printf("print game:\n");
+  for (int i=0;i <81; i++){
     if (i % 9 == 0){
       printf("\n");
     }
+    printf("%d ", game[i]);
   }
 }
-int readgamefile (int *game){
+void readgamefile (int *game){
   char ch;
   FILE *fp;
   int i = 0;
   fp = fopen("input-sudoku.txt","r");
-  while( ( ch = fgetc(fp) ) != EOF )
-    printf("%s ", ch);
-    game[i] = ch;
+  printf("input file is:\n");
+  while( ( ch = fgetc(fp) ) != EOF ){
     i++;
+    printf("%c", ch);
+  }
+  printf("%d", i);
 }
 int main(int argc, char **argv){
   readgamefile(game);
-  printgame(game);
 }
