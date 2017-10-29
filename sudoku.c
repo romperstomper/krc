@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 int game[81] = {0};
 
 void printgame (int *game){
@@ -10,6 +11,17 @@ void printgame (int *game){
     }
   }
 }
+int readgamefile (int *game){
+  char ch;
+  FILE *fp;
+  int i = 0;
+  fp = fopen("input-sudoku.txt","r");
+  while( ( ch = fgetc(fp) ) != EOF )
+    printf("%s ", ch);
+    game[i] = ch;
+    i++;
+}
 int main(int argc, char **argv){
+  readgamefile(game);
   printgame(game);
 }
