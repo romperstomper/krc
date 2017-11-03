@@ -34,24 +34,22 @@ int islegal(int *game, int cell, int x){
   int rownum = (cell / 9);
   int rowstart = rownum * 9;
   int rowend = rowstart + 8;
-  for (int i=rowstart;i<=rowend;i++){
-    printf("game[i]: %d\n", game[i]);
-    if (game[i] == x){
-      printf("bad\n");
-      return 0; 
-    } 
-  game[cell] = x;
-  printf("good\n");
-  return 1;
-  }
   printf("rownum: %d\n", rownum);
   printf("rowstart: %d\n", rowstart);
   printf("rowend: %d\n", rowend);
   printf("\n");
+  for (int i=rowstart;i<=rowend;i++){
+    printf("game[i]: %d\n", game[i]);
+    if (game[i] == x){
+      return 0; 
+    } 
+  }
+  game[cell] = x;
+  return 1;
 }
 int main(int argc, char **argv){
   readgamefile(game);
-  printgame(game);
+  //printgame(game);
   int res = islegal(game, 1, 7);
   printf("result: %d\n", res);
   printgame(game);
