@@ -34,12 +34,13 @@ int islegal(int *game, int cell, int x){
   int rownum = (cell / 9);
   int rowstart = rownum * 9;
   int rowend = rowstart + 8;
-  printf("rownum: %d\n", rownum);
-  printf("rowstart: %d\n", rowstart);
-  printf("rowend: %d\n", rowend);
-  printf("\n");
   for (int i=rowstart;i<=rowend;i++){
-    printf("game[i]: %d\n", game[i]);
+    if (game[i] == x){
+      return 0; 
+    } 
+  }
+  int col = (cell % 9);
+  for (int i=col;i<=80;i+=9){
     if (game[i] == x){
       return 0; 
     } 
@@ -47,11 +48,49 @@ int islegal(int *game, int cell, int x){
   game[cell] = x;
   return 1;
 }
+int getnextcell(int *game){
+  for (int i=0;i<=80;i++){
+    if (game[i]==0){
+      return i; 
+    }
+  }
+}
+void printnextcell(int *game){
+  for (int i=0;i<=80;i++){
+    if (game[i]==0){
+    printf("nextemptycell %d\n", i); 
+    }
+  }
+}
+int hasemptycell(int *game){
+  for (int i=0;i<=80;i++){
+    if (game[i]==0){
+      return 1; 
+    }
+  }
+  return 0;
+}
+
+int solveable(int *game){
+  if (hasemptycell(game)){
+    int tryvalue = 1;
+    int cell = getnextcell(game);
+    while (tryvalue <=9){
+      if (!islegal(game, cell, tryvalue)){
+        tryvalue++;
+      } else {
+      solveable(game);
+      }
+    }
+  } else {
+  return 1;
+  }
+}
 int main(int argc, char **argv){
   readgamefile(game);
-  //printgame(game);
-  int res = islegal(game, 1, 7);
-  printf("result: %d\n", res);
   printgame(game);
-  //islegal(game, 12, 9);
+  solveable(game);
+  printnextcell(game);
+  printgame(game);
+  return 0;
 }
