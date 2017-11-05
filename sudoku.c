@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#define TRUE 1
+#define FALSE 0
 int game[81] = {0};
 
 void printgame (int *game){
@@ -45,6 +47,7 @@ int islegal(int *game, int cell, int x){
       return 0; 
     } 
   }
+
   game[cell] = x;
   return 1;
 }
@@ -72,25 +75,30 @@ int hasemptycell(int *game){
 }
 
 int solveable(int *game){
+  int solved = FALSE;
   if (hasemptycell(game)){
     int tryvalue = 1;
     int cell = getnextcell(game);
-    while (tryvalue <=9){
+    while (!solved && tryvalue <=9){
+    //printf("cell %d tryvalue %d\n", cell, tryvalue); 
       if (!islegal(game, cell, tryvalue)){
         tryvalue++;
+        if (tryvalue == 10){
+          printf("10 error! cell: %d\n", cell);
+        }
       } else {
       solveable(game);
       }
     }
   } else {
-  return 1;
+  solved = TRUE;
   }
+  return solved;
 }
 int main(int argc, char **argv){
   readgamefile(game);
   printgame(game);
   solveable(game);
-  printnextcell(game);
   printgame(game);
   return 0;
 }
