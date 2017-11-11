@@ -6,13 +6,14 @@
 int game[81] = {0};
 
 void printgame (int *game){
-  printf("print game:\n");
+  printf("Game State:\n");
   for (int i=0;i <81; i++){
     if (i % 9 == 0){
       printf("\n");
     }
     printf("%d ", game[i]);
   }
+  printf("\n");
   printf("\n");
 }
 void readgamefile (int *game){
