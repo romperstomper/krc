@@ -72,7 +72,6 @@ int islegal(int *game, int cell, int x){
   }
  }
 
-  game[cell] = x;
   return 1;
 }
 int getnextcell(int *game){
@@ -92,16 +91,20 @@ int hasemptycell(int *game){
 }
 
 int solveable(int *game){
-  int solved = FALSE;
-  if (hasemptycell(game)){
-    int tryvalue = 1;
-    int cell = getnextcell(game);
-    while (!solved && tryvalue <=9){
-      if (!islegal(game, cell, tryvalue)){
-        tryvalue++;
+  if (!hasemptycell(game)) {
+    return TRUE;
+  }
+  int cell = getnextcell(game);
+  for (int i=1;i<=9;i++){
+    if (islegal(game, cell, i)){
+      game[cell] = i;
+      if(solveable(game)){
+        return TRUE;
       }
+      game[cell] = 0;
     }
   }
+  return FALSE;
 }
 int main(int argc, char **argv){
   readgamefile(game);
