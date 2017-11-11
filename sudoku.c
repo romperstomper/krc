@@ -32,6 +32,18 @@ void readgamefile (int *game){
     i++;
   }
 }
+int getsquare(int *game, int cell, int x){
+  int sqrow = cell/27;
+  int sqcol = (cell % 9)/3;
+  for(int i=0;i<=80;i++){
+    if((i/27 == sqrow)&&((i%9)/3==sqcol)){
+      if (i==x){
+      return FALSE; 
+      }
+    }
+  }
+  return TRUE;
+}
 int islegal(int *game, int cell, int x){
   int rownum = (cell / 9);
   int rowstart = rownum * 9;
@@ -47,6 +59,18 @@ int islegal(int *game, int cell, int x){
       return 0; 
     } 
   }
+  int sqRow = cell / ( 9 * 3 );
+  int sqCol = (cell % 9) / 3 ;
+
+  int checkCell = 0 ;
+  for(int i= 0; i<=80;i++){
+    if((i / ( 9 * 3 ) == sqRow) && (( (i % 9) / 3 )== sqCol)){
+
+      if( game[i] == x){
+    return FALSE;
+   }
+  }
+ }
 
   game[cell] = x;
   return 1;
@@ -55,13 +79,6 @@ int getnextcell(int *game){
   for (int i=0;i<=80;i++){
     if (game[i]==0){
       return i; 
-    }
-  }
-}
-void printnextcell(int *game){
-  for (int i=0;i<=80;i++){
-    if (game[i]==0){
-    printf("nextemptycell %d\n", i); 
     }
   }
 }
@@ -80,20 +97,11 @@ int solveable(int *game){
     int tryvalue = 1;
     int cell = getnextcell(game);
     while (!solved && tryvalue <=9){
-    //printf("cell %d tryvalue %d\n", cell, tryvalue); 
       if (!islegal(game, cell, tryvalue)){
         tryvalue++;
-        if (tryvalue == 10){
-          printf("10 error! cell: %d\n", cell);
-        }
-      } else {
-      solveable(game);
       }
     }
-  } else {
-  solved = TRUE;
   }
-  return solved;
 }
 int main(int argc, char **argv){
   readgamefile(game);
